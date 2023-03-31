@@ -1,0 +1,200 @@
+﻿openapi: 3.0.1
+info:
+  title: API funciona
+  description: Desenvolvimento Back-end para Aplicações Mobile - Unyleya.
+  version: 0.0.1
+  termsOfService: https://portalaluno.unyleya.edu.br/login?_ga=2.209366033.26495994.1680229037-1802405202.1661978311
+  contact:
+    name: Pietro
+    email: pietrocosentino88@gmail.com
+    url: http://localhost:3000
+  license:
+    name: "Lincença: MBA Mobile"
+externalDocs:
+  description: Documentação para Aplicações Mobile
+  url: www.unyleya.com.br
+servers:
+- url: http://localhost:3000
+  description: API de livraria
+paths:
+  /livros:
+    get:
+      summary: Recupera todos os livros
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Livros"
+    post:
+      summary: Cria novo livro
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                descricao:
+                  type: string
+      responses:
+        201:
+          description: "Sucesso"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Livro"
+  /livros/busca:
+    get:
+      summary: Recupera todos os livros por editora
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Livros"
+  /livros/{id}:
+    parameters:
+    - name: id
+      in: path
+      schema:
+        type: integer
+      required: true
+    get:
+      summary: Recupera uma entidade pelo ID
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Livro"
+        404:
+          description: Livro não encontrada
+          content:
+            application/json:
+              example: "Not Found"
+    put:
+      summary: Altera uma entidade pelo ID
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Livro"
+    delete:
+      summary: Deleta uma entidade pelo ID
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Livro"
+  /autor:
+    get:
+      summary: Recupera todos os autores
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Autores"
+    post:
+      summary: Cria novo autor
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                descricao:
+                  type: string
+      responses:
+        201:
+          description: "Sucesso"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Autor"
+  /autor/{id}:
+    parameters:
+    - name: id
+      in: path
+      schema:
+        type: integer
+      required: true
+    get:
+      summary: Recupera todos os autores pelo id
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Autores"
+        404:
+          description: Autor não encontrada
+          content:
+            application/json:
+              example: "Not Found"
+    put:
+      summary: Altera uma entidade pelo ID
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Autor"
+    delete:
+      summary: Deleta uma entidade pelo ID
+      responses:
+        200:
+          description: Sucesso
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Autor"
+security: 
+- auth: []
+components:
+  schemas:
+    Livro:
+      type: object
+      properties:
+        id:
+          type: integer
+        titulo:
+          type: string
+        autor:
+          type: string
+        editora:
+          type: string
+        numeropag:
+          type: integer
+    Livros:
+      type: array
+      items:
+        $ref: "#/components/schemas/Livro"
+    Autor:
+      type: object
+      properties:
+        id:
+          type: integer
+        nome:
+          type: string
+        nacionalidade:
+          type: string
+    Autores:
+      type: array
+      items:
+        $ref: "#/components/schemas/Autor" 
+  securitySchemes:
+    auth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
